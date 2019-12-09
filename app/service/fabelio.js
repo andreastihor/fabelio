@@ -10,7 +10,6 @@ const request = require('request').defaults({
 const Promise = require('bluebird')
 const cheerio = require('cheerio')
 const get = Promise.promisify(request.get)
-const fs = require('fs')
 
 
 
