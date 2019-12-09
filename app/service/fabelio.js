@@ -16,9 +16,9 @@ const get = Promise.promisify(request.get)
 module.exports.getDetailInformation = async (link) => {
   const response = await get(link)
   const $ = cheerio.load(response.body)
-  fs.writeFileSync('test.html',response.body)
   const name = $('.base').text()
-  const price = $('.price').text()
+  const $price = $('.price')
+  const price = $($price[0]).text()
   const description = getDescription($)
   //still not working
   const images = getImages($)
