@@ -1,0 +1,30 @@
+{
+  "name": "fabelio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.3",
+    "bluebird": "^3.7.2",
+    "joi": "^14.3.1",
+    "nodemon": "^2.0.1",
+    "request": "^2.88.0",
+    "hapi": "^18.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start" : "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreastihor/fabelio.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andreastihor/fabelio/issues"
+  },
+  "homepage": "https://github.com/andreastihor/fabelio#readme"
+}
