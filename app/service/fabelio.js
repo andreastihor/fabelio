@@ -17,8 +17,7 @@ module.exports.getDetailInformation = async (link) => {
   const response = await get(link)
   const $ = cheerio.load(response.body)
   const name = $('.base').text()
-  const $price = $('.price')
-  const price = $($price[0]).text()
+  const price = getPrice($)
   const description = getDescription($)
   //still not working
   const images = getImages($)
@@ -31,6 +30,11 @@ module.exports.getDetailInformation = async (link) => {
   }
 
 
+}
+
+function getPrice($) {
+  const $price = $('.price')
+  return $($price[0]).text()
 }
 
 function getDescription($) {
@@ -61,4 +65,10 @@ function getImages($) {
   const $images = $('.fotorama__nav__frame.fotorama__nav__frame--thumb img')
   const images = []
   return images
+}
+
+module.exports.getPriceBaseOnLink = async (link) => {
+  const response = await get(link)
+  const $ = cheerio.load(response.body)
+  return getPrice($)
 }
