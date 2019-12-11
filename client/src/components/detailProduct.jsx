@@ -49,10 +49,8 @@ render () {
         </ul>
         <label htmlFor="content">Images  : </label>
       <ul>
-        {this.state.images.map(price =>
-          <li>
-            <img></img>
-          </li>
+        {this.state.images.map(image =>
+          <p>  <img src = {image}></img> </p>
         )}
         </ul>
       </div>

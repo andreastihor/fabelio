@@ -3,7 +3,7 @@ import {Route, Switch } from 'react-router-dom';
 
 import Home from './home';
 import Products from './products'
-import DetailPost from './detailPost'
+import DetailProduct from './detailProduct'
 
 class Routing extends Component {
   render () {
@@ -11,7 +11,7 @@ class Routing extends Component {
       <Switch>
         <Route path="/" component={Home} exact />
         <Route path="/list" component={Products} exact />
-        <Route path="/detailPost" component={DetailPost} exact />
+        <Route path="/detailPost" component={DetailProduct} exact />
       </Switch>
     )
   }
