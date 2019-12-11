@@ -1,70 +1,75 @@
-const request = require('request').defaults({
-  headers: {
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) ' +
-                  'AppleWebKit/537.36 (KHTML, like Gecko) ' +
-                  'Chrome/63.0.3239.84 ' +
-                  'Safari/537.36',
-  }
-})
-const Promise = require('bluebird')
-const cheerio = require('cheerio')
-const get = Promise.promisify(request.get)
+const puppeteer = require('puppeteer');
 
+async function createBrowser() {
+  const puppeteer_options = {launch: {
+    headless: true,
+    slowMo: 50,
+    args: [
+      '--no-sandbox',
+      '--disable-web-security',
+      '--disable-features=site-per-process',
+      '--ignore-certificate-errors',
+      '--incognito',
+    ]
+  },
+  viewport: {
+    width: 1400,
+    height: 750,
+  }}
+  const browser = await puppeteer.launch(puppeteer_options.launch);
+  const pages = await browser.pages();
+  const page = pages[0];
+  await page.setViewport(puppeteer_options.viewport);
+  page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36');
+  return {
+    page,
+    browser,
+  };
+}
 
 
 module.exports.getDetailInformation = async (link) => {
-  const response = await get(link)
-  const $ = cheerio.load(response.body)
-  const name = $('.base').text()
-  const price = getPrice($)
-  const description = getDescription($)
-  //still not working
-  const images = getImages($)
-
+  const {page,browser} = await createBrowser()
+  await page.goto(link)
+  const name = await getName(page)
+  const price = await getPrice(page)
+  const images = await getImages(page)
+  await browser.close()
   return{
     name,
     price,
-    description,
     images
   }
 
 
 }
 
-function getPrice($) {
-  const $price = $('.price')
-  return $($price[0]).text()
-}
-
-function getDescription($) {
-  const $p = $('#additional-data .data p')
-  const dimensi = $($p[0]).text()
-  const material = $($p[2]).text().replace(/-/g,'\n').trim()
-
-  const $ul = $('#additional-data .data ul')
-  const instruksi_perawatan = []
-  const $instruksi = $($ul[0]).find('li')
-  $instruksi.each((idx, el) => {
-    instruksi_perawatan.push($(el).text())
+async function getName(page) {
+  await page.waitForSelector('.base')
+  return await page.evaluate(() => {
+    return document.querySelector('.base').textContent
   })
-
-  const pengiriman_pengembalian = {}
-  const $pengiriman = $($ul[1]).find('li')
-  pengiriman_pengembalian['pengembalian_produk'] = $($pengiriman[0]).text().substring(19)
-  pengiriman_pengembalian['pengembalian_dana'] = $($pengiriman[1]).text().substring(17)
-  return {
-    dimensi,
-    material,
-    instruksi_perawatan,
-    pengiriman_pengembalian,
-  }
 }
 
-function getImages($) {
-  const $images = $('.fotorama__nav__frame.fotorama__nav__frame--thumb img')
-  const images = []
-  return images
+async function getPrice(page) {
+  await page.waitForSelector('.price')
+  return await page.evaluate(() => {
+    return document.querySelector('.price').textContent
+  })
+}
+
+
+async function getImages(page) {
+
+  await page.waitForSelector('.fotorama__nav__frame.fotorama__nav__frame--thumb img')
+  return await page.evaluate(() => {
+    const images = []
+    const $images = document.querySelectorAll('.fotorama__nav__frame.fotorama__nav__frame--thumb img')
+    for(let i =0,n = $images.length;i<n;i++){
+      images.push($images[i].src)
+    }
+    return images
+  })
 }
 
 module.exports.getPriceBaseOnLink = async (link) => {
