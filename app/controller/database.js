@@ -36,3 +36,12 @@ module.exports.changePriceValuePerLink = (link, price) => {
   }
   return
 }
+
+module.exports.getProductDetail = (link) => {
+  for(let i =0, n = database_products.products.length; i<n; i++) {
+    const tempObject = database_products.products[i]
+    if (tempObject.link == link) {
+      return tempObject
+  }
+  }
+}

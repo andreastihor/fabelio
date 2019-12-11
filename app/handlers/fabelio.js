@@ -13,5 +13,8 @@ module.exports = {
   getAllProducts : {
     handler : fabelio.getAllProducts,
   },
+  getProductDetail : {
+    handler : fabelio.getProductDetail,
+  },
 
 }

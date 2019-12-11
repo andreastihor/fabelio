@@ -12,6 +12,10 @@ module.exports.getDetail = async (request, h) => {
 module.exports.getAllProducts = (request,h) => {
   return database.getAllProducts()
 }
+module.exports.getAllProducts = (request,h) => {
+  const link = request.payload.link
+  return database.getProductDetail(link)
+}
 
 async function changeValuePerHour(link) {
   const ONEHOUR = 60 * 60 * 1000; // 60 minutes
