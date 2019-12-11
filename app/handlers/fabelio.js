@@ -15,6 +15,11 @@ module.exports = {
   },
   getProductDetail : {
     handler : fabelio.getProductDetail,
+    validate : {
+      payload : {
+        link : Joi.string().required()
+      }
+    }
   },
 
 }

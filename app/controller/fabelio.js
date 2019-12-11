@@ -12,7 +12,7 @@ module.exports.getDetail = async (request, h) => {
 module.exports.getAllProducts = (request,h) => {
   return database.getAllProducts()
 }
-module.exports.getAllProducts = (request,h) => {
+module.exports.getProductDetail = (request,h) => {
   const link = request.payload.link
   return database.getProductDetail(link)
 }
