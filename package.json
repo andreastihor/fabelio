@@ -6,6 +6,7 @@
   "dependencies": {
     "bluebird": "^3.7.2",
     "cheerio": "^1.0.0-rc.3",
+    "concurrently": "^5.0.1",
     "hapi": "^18.1.0",
     "joi": "^14.3.1",
     "moment-timezone": "^0.5.27",
@@ -14,7 +15,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently --kill-others \"npm run server\" \"npm run client\"",
+    "server": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
