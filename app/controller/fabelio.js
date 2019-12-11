@@ -23,4 +23,5 @@ async function changeValuePerHour(link) {
     const price = await fabelio.getPriceBaseOnLink(link)
     return database.changePriceValuePerLink(link, price)
   },ONEHOUR)
+  return
 }
