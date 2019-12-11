@@ -73,7 +73,7 @@ async function getImages(page) {
 }
 
 module.exports.getPriceBaseOnLink = async (link) => {
-  const response = await get(link)
-  const $ = cheerio.load(response.body)
-  return getPrice($)
+  const {page,browser} = await createBrowser()
+  await page.goto(link)
+  return await getPrice(page)
 }
