@@ -1,4 +1,9 @@
-Clone this repository and install all the necesarry dependencies
+Web application for bsocks.id
 
-To install ALL necesarry dependencies : run 'npm install'
-To run Apps : run 'npm run start'
+#How to:
+
+#to run client only: npm run client
+
+#to run server only: npm run server
+
+#to run full app: npm run dev
