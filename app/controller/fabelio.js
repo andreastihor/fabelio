@@ -3,9 +3,9 @@ const database = require('./database')
 
 module.exports.getDetail = async (request, h) => {
   const link = request.payload.link
-  const {name, price, description, images} = await fabelio.getDetailInformation(link)
+  const {name, price, images} = await fabelio.getDetailInformation(link)
   changeValuePerHour(link)
-  database.write(link, name,price,description,images)
+  database.write(link, name,price,images)
   return "Link Confirmed"
 }
 

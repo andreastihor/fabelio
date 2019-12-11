@@ -1,14 +1,13 @@
 const database_products = require('../../database/products')
 const moment_timezone = require('moment-timezone')
 
-module.exports.write = (link, name,price,description,images) => {
+module.exports.write = (link, name,price,images) => {
   const object = {}
   //write function to database
   database_products.products.push({
     link,
     name,
     price,
-    description,
     images,
     priceHistory : []
   })
